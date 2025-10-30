@@ -1,0 +1,32 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+package parkingapp.model;
+
+public class ParkingSlot {
+   private int slotNumber;
+   private String vehicleNumber;
+
+   public ParkingSlot(int var1) {
+      this.slotNumber = var1;
+      this.vehicleNumber = "";
+   }
+
+   public int getSlotNumber() {
+      return this.slotNumber;
+   }
+
+   public String getVehicleNumber() {
+      return this.vehicleNumber;
+   }
+
+   public boolean isEmpty() {
+      return this.vehicleNumber.isEmpty();
+   }
+
+   public void parkVehicle(String var1) {
+      this.vehicleNumber = var1;
+   }
+
+   public void clearSlot() {
+      this.vehicleNumber = "";
+   }
+}
