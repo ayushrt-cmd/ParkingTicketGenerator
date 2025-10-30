@@ -1,0 +1,69 @@
+package parkingapp.main;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import parkingapp.service.ParkingService;
+
+public class ParkingApp extends JFrame implements ActionListener {
+    private JTextField txtVehicle;
+    private JTextArea txtArea;
+    private ParkingService service;
+
+    public ParkingApp() {
+        service = new ParkingService();
+
+        setTitle("Parking System (3 Slots)");
+        setSize(400, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JLabel lblTitle = new JLabel("Parking System (3 Slots)", JLabel.CENTER);
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 18));
+        add(lblTitle, BorderLayout.NORTH);
+
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.add(new JLabel("Vehicle No:"));
+        txtVehicle = new JTextField(10);
+        panel.add(txtVehicle);
+
+        JButton btnPark = new JButton("Park Vehicle");
+        JButton btnLeave = new JButton("Leave Slot");
+        JButton btnView = new JButton("View Slots");
+
+        btnPark.addActionListener(this);
+        btnLeave.addActionListener(this);
+        btnView.addActionListener(this);
+
+        panel.add(btnPark);
+        panel.add(btnLeave);
+        panel.add(btnView);
+
+        txtArea = new JTextArea(10, 30);
+        txtArea.setEditable(false);
+        JScrollPane scroll = new JScrollPane(txtArea);
+
+        add(panel, BorderLayout.CENTER);
+        add(scroll, BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String cmd = e.getActionCommand();
+        String vehicle = txtVehicle.getText().trim();
+
+        if (cmd.equals("Park Vehicle")) {
+            if (vehicle.isEmpty()) txtArea.setText("Enter vehicle number!");
+            else txtArea.setText(service.parkVehicle(vehicle));
+        } else if (cmd.equals("Leave Slot")) {
+            if (vehicle.isEmpty()) txtArea.setText("Enter vehicle number!");
+            else txtArea.setText(service.leaveSlot(vehicle));
+        } else if (cmd.equals("View Slots")) {
+            txtArea.setText(service.viewSlots());
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new ParkingApp().setVisible(true));
+    }
+}
